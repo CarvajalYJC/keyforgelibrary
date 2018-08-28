@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+	<head>
+		<title>KeyForge Card Library</title>
+
+		<link rel="stylesheet" href="main.css">
+	</head>
+
+	<body>
+		<h1>KeyForge Card Library</h1>
+
+		<div id="application"></div>
+
+		<script src="card_parser.js"></script>
+		<script src="https://spreadsheets.google.com/feeds/cells/1p-m25I-Yg0vR3aqeLdIznIfZ9CRkVTrdnB44IGDSLHQ/1/public/values?alt=json-in-script&callback=parseCards"></script>
+
+		<!-- Load React. -->
+		<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+		<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+		<script src="card_library/table_view.js"></script>
+		<script src="card_library/card_filter.js"></script>
+		<script src="card_library/application.js"></script>
+	</body>
+</html>
