@@ -71,7 +71,7 @@ class TableView extends React.Component {
 	}
 
 	render() {
-		return React.createElement('table', {}, [
+		return React.createElement('table', {className: 'card-table'}, [
 			React.createElement(TableHeader, {key: 'tableHeader'}),
 			React.createElement(TableBody, {key: 'tableBody', cards: this.props.cards})
 		]);

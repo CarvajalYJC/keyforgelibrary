@@ -15,7 +15,12 @@ class CardFilter extends React.Component {
 	}
 
 	render() {
-		return React.createElement('input', {className: 'card-filter', placeholder: 'Search...', onChange: this.filterList.bind(this)});
+		return React.createElement('div', {className: 'filter-container'}, [
+			React.createElement('div', {className: 'search-box', key: 'search-box'}, [
+				React.createElement('input', {className: 'card-filter', key: 'card-filter', onChange: this.filterList.bind(this)}),
+				React.createElement('span', {key: 'span'})
+			])
+		]);
 	}
 
 	filterList(event) {
@@ -27,6 +32,7 @@ class CardFilter extends React.Component {
 
 	performFilter(value, card) {
 		return contains(value, card.name)
+			|| startsWith(value, card.id)
 			|| startsWith(value, card.house)
 			|| startsWith(value, card.type)
 			|| startsWith(value, card.rarity)
