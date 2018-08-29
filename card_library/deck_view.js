@@ -8,6 +8,8 @@ class CardView extends React.Component {
 
 	render() {
 		const card = this.props.card;
+		const rarity = (card.rarity === '???' ? '?' : card.rarity.substring(0, 1));
+
 		return React.createElement('div', {className: 'card-container'}, [
 			React.createElement('div', {className: 'card u-clearfix', key: 'card'}, [
 				React.createElement('div', {className: 'card-body', key: 'card-body'}, [
@@ -16,7 +18,7 @@ class CardView extends React.Component {
 					React.createElement('h2', {className: 'card-title', key: 'card-title'}, `${card.name}`),
 					React.createElement('span', {className: 'card-description subtle', key: 'card-description'}, `${card.text}`),
 					React.createElement('div', {className:  `card-type card-type-${card.type.toLowerCase()}`, key: 'card-type'}, `${card.type}`),
-					React.createElement('span', {className: 'card-rarity card-circle subtle', key: 'card-rarity'}, 'R')
+					React.createElement('span', {className: 'card-rarity card-circle subtle', key: 'card-rarity'}, rarity)
 				]),
 				React.createElement('img', {src: `${card.img}`, height: 438, width: 300, className: 'card-media', key: 'card-media'})
 			]),
