@@ -17,8 +17,22 @@ class CardFilter extends React.Component {
 	render() {
 		return React.createElement('div', {className: 'filter-container'}, [
 			React.createElement('div', {className: 'search-box', key: 'search-box'}, [
-				React.createElement('input', {className: 'card-filter', key: 'card-filter', onChange: this.filterList.bind(this)}),
-				React.createElement('span', {key: 'span'})
+				React.createElement('input', {
+					className: 'search-input', 
+					key: 'search-input',
+					placeholder: 'Search...',
+					onChange: this.filterList.bind(this)
+				}),
+				React.createElement('button', {
+					type: 'button',
+					className: 'fa fa-search search-button',
+					key: 'search-button'
+				}),
+				React.createElement('button', {
+					type: 'button',
+					className: 'fa fa-cog search-settings-button',
+					key: 'search-settings-button'
+				})
 			])
 		]);
 	}

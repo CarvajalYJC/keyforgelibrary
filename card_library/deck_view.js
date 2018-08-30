@@ -20,7 +20,7 @@ class CardView extends React.Component {
 					React.createElement('div', {className:  `card-type card-type-${card.type.toLowerCase()}`, key: 'card-type'}, `${card.type}`),
 					React.createElement('span', {className: 'card-rarity card-circle subtle', key: 'card-rarity'}, rarity)
 				]),
-				React.createElement('a', {href: `${card.img}`, target: '_blank'}, [
+				React.createElement('a', {href: `${card.img}`, target: '_blank', key: 'card-media-link'}, [
 					React.createElement('img', {src: `${card.img}`, height: 438, width: 300, className: 'card-media', key: 'card-media'})
 				])
 			]),
