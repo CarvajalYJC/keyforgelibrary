@@ -21,7 +21,7 @@ class Application extends React.Component {
 
 	render() {
 		return React.createElement('div', {className: 'container'}, [
-			React.createElement(CardFilter, {key: 'cardFilter', cards: this.state.initialCards, onFilter: this.updateCards.bind(this)}),
+			React.createElement(FilterView, {key: 'filterView', cards: this.state.initialCards, onFilter: this.updateCards.bind(this)}),
 			React.createElement(DeckView, {key: 'deckView', cards: this.state.cards})
 		]);
 	}

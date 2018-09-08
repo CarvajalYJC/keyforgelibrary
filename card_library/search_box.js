@@ -8,32 +8,25 @@ const startsWith = function(testValue, cardValue) {
 	return cardValue && cardValue.toLowerCase().startsWith(testValue);
 };
 
-class CardFilter extends React.Component {
+class SearchBox extends React.Component {
 
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
-		return React.createElement('div', {className: 'filter-container'}, [
-			React.createElement('div', {className: 'search-box', key: 'search-box'}, [
-				React.createElement('input', {
-					className: 'search-input', 
-					key: 'search-input',
-					placeholder: 'Search...',
-					onChange: this.filterList.bind(this)
-				}),
-				React.createElement('button', {
-					type: 'button',
-					className: 'fa fa-search search-button',
-					key: 'search-button'
-				}),
-				React.createElement('button', {
-					type: 'button',
-					className: 'fa fa-cog search-settings-button',
-					key: 'search-settings-button'
-				})
-			])
+		return React.createElement('div', {className: 'search-box'}, [
+			React.createElement('input', {
+				className: 'search-input', 
+				key: 'search-input',
+				placeholder: 'Search...',
+				onChange: this.filterList.bind(this)
+			}),
+			React.createElement('button', {
+				type: 'button',
+				className: 'fa fa-search search-button',
+				key: 'search-button'
+			})
 		]);
 	}
 

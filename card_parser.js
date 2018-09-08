@@ -15,7 +15,16 @@ const COLUMNS = {
 	"11": "chains",
 	"12": "maverick",
 	"13": "special",
-	"14": "img"
+	"14": "img",
+	"15": "op_lose_aember",
+	"16": "op_steal_aember",
+	"17": "op_capture_aember",
+	"18": "op_gain_aember",
+	"19": "fr_lose_aember",
+	"20": "fr_steal_aember",
+	"21": "fr_capture_aember",
+	"22": "fr_gain_aember",
+	"23": "fr_move_aember"
 };
 
 const keyforgeCards = [];
