@@ -29,7 +29,8 @@ class FilterView extends React.Component {
 			}),
 			React.createElement(FacetsView, {
 				key: 'facetsView',
-				cards: this.state.cards
+				cards: this.state.cards,
+				facets: this.props.facets
 			})
 		]);
 	}
