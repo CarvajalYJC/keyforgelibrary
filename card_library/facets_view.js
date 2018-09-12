@@ -12,16 +12,21 @@ class FacetView extends React.Component {
 		const facetValues = [];
 
 		values.forEach(value => {
-			facetValues.push(React.createElement('label', {key: `label::${value.key}:${value.value}`}, [
+			facetValues.push(React.createElement('label', {
+				key: `label::${value.key}:${value.value}`,
+				className: `facet-value ${value.count == 0 ? 'facet-value-empty' : ''}`
+			}, [
 				React.createElement('input', {
 					key: `${value.key}:${value.value}`,
-					className: 'facet-value',
 					type: 'checkbox',
 					name: value.key,
 					value: value.value,
 					onClick: this.props.onFacetValueClick
 				}),
-				`${value.value} (${value.count})`
+				React.createElement('span', {
+					key: `span:${value.key}:${value.value}`,
+					className: 'facet-text'
+				}, `${value.value} (${value.count})`)
 			]));
 			facetValues.push(React.createElement('br', {key: `br:${value.key}:${value.value}`}));
 		});

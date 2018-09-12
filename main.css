@@ -210,18 +210,17 @@ html {
 	padding: 10px 12px;
 }
 
-.facets-container > ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+.facet {
+	margin-bottom: 15px;
 }
 
-.facets-container > ul > li {
-	color: #aaa;
-	font-size: 12px;
-	padding: 2px 0;
+.facet-text {
+	padding-left: 5px;
 }
 
+.facet-value-empty {
+	color: #bbb;
+}
 
 
 
