@@ -1,9 +1,18 @@
 'use strict';
 
-class Facet {
+/**
+{
+	key: 'house',
+	label: 'House',
+	type: 'value'
+}
+**/
+class ValueFacet {
 
-	constructor({name}) {
-		this.name = name;
+	constructor({key, label, emptyKey = 'Empty'}) {
+		this.key = key;
+		this.label = label;
+		this.emptyKey = emptyKey;
 		this.index = {};
 	}
 
@@ -12,45 +21,75 @@ class Facet {
 	}
 
 	indexCard(card) {
-		throw new Error('Need to override indexCard() in implementation!');
+		const key = card[this.key] || this.emptyKey;
+		if (!this.index[key]) {
+			this.index[key] = 0;
+		}
+
+		this.index[key] = this.index[key] + 1;
+	}
+
+	matches(card, value) {
+		if (card[this.key] == value) {
+			return true;
+		} else if (value == this.emptyKey && !card[this.key]) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	getIndexedValues() {
-		const values = Object.keys(this.index).map(key => {
-			return {name: key, count: this.index[key]};
+		const indexedValues = Object.keys(this.index).map(value => {
+			return {
+				key: this.key,
+				value: value,
+				count: this.index[value]
+			};
 		});
 
-		return values.sort((a, b) => a.name.localeCompare(b.name));
+		return indexedValues.sort((a, b) => a.value.localeCompare(b.value));
 	}
 
 }
 
-class BooleanFacet extends Facet {
+class ArrayFacet extends ValueFacet {
 
-	constructor(config) {
-		super(config);
-		this.prop = config.prop;
-		this.trueName = config.trueName;
-		this.falseName = config.falseName;
-		this.reset();
-	}
-
-	reset() {
-		super.reset();
-		this.index[this.trueName] = 0;
-		this.index[this.falseName] = 0;
+	constructor(props) {
+		super(props)
 	}
 
 	indexCard(card) {
-		if (card[this.prop]) {
-			this.index[this.trueName] = this.index[this.trueName] + 1;
+		const keysString = card[this.key] || this.emptyKey;
+		const keys = keysString.split(',').map(it => it.trim());
+		keys.forEach(key => {
+			if (!this.index[key]) {
+				this.index[key] = 0;
+			}
+
+			this.index[key] = this.index[key] + 1;
+		});
+	}
+
+	matches(card, value) {
+		if (value == this.emptyKey && !card[this.key]) {
+			return true;
 		} else {
-			this.index[this.falseName] = this.index[this.falseName] + 1;
+			const keys = card[this.key] || null;
+			if (keys && Array.isArray(keys)) {
+				return keys.indexOf(value) != -1;
+			} else {
+				return false;
+			}
 		}
 	}
 
 }
 
 const FACETS = [
-	new BooleanFacet({name: 'Resources', prop: 'img', trueName: 'Has Image', falseName: 'No Image'})
+	new ValueFacet({key: 'house', label: 'House'}),
+	new ValueFacet({key: 'type', label: 'Card Type'}),
+	new ValueFacet({key: 'rarity', label: 'Rarity'}),
+	new ValueFacet({key: 'aember', label: 'Aember'}),
+	new ArrayFacet({key: 'traits', label: 'Trait'})
 ];
