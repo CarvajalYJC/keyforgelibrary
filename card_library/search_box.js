@@ -12,12 +12,12 @@ class SearchBox extends React.Component {
 				className: 'search-input', 
 				key: 'search-input',
 				placeholder: 'Search...',
-				onChange: this.onChange.bind(this)
+				onKeyUp: this.onKeyUp.bind(this)
 			})
 		]);
 	}
 
-	onChange(event) {
+	onKeyUp(event) {
 		this.props.onSearch(event.target.value);
 	}
 

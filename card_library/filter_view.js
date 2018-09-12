@@ -42,7 +42,7 @@ class FilterView extends React.Component {
 			searchTerm: value.toLowerCase()
 		});
 
-		this.filterCards(this.state.lastClickedFacetKey);
+		this.filterCards(this.state.lastClickedFacetKey, this.state.facetValuesByKey);
 	}
 
 	onFacetValueClick(key, value) {
@@ -60,13 +60,13 @@ class FilterView extends React.Component {
 			lastClickedFacetKey: key
 		});
 
-		this.filterCards(key);
+		this.filterCards(key, facetValuesByKey);
 	}
 
-	filterCards(lastClickedFacetKey) {
+	filterCards(lastClickedFacetKey, facetValuesByKey) {
 		const cardsMatchingSearchTerm = this.state.initialCards.filter(card => this.performFilter(this.state.searchTerm, card));
 		const cardsMatchingFacets = cardsMatchingSearchTerm.filter(this.matchesFacets.bind(this));
-		this.updateCards(cardsMatchingFacets, lastClickedFacetKey);
+		this.updateCards(cardsMatchingFacets, lastClickedFacetKey, facetValuesByKey);
 	}
 
 	performFilter(value, card) {
@@ -94,26 +94,26 @@ class FilterView extends React.Component {
 		});
 	}
 
-	updateCards(cards, lastClickedFacetKey) {
+	updateCards(cards, lastClickedFacetKey, facetValuesByKey) {
 		this.setState({
 			cards: cards
 		});
 		this.props.onFilter(cards);
-		this.indexCards(cards, lastClickedFacetKey);
+		this.indexCards(cards, lastClickedFacetKey, facetValuesByKey);
 	}
 
-	indexCards(cards, lastClickedFacetKey) {
+	indexCards(cards, lastClickedFacetKey, facetValuesByKey) {
 		const facets = this.state.facets;
 
 		facets.forEach(facet => {
-			if (facet.key != lastClickedFacetKey) {
+			if (facet.key != lastClickedFacetKey || facetValuesByKey[facet.key].length == 0) {
 				facet.clear();
 			}
 		});
 
 		cards.forEach(card => {
 			facets.forEach(facet => {
-				if (facet.key != lastClickedFacetKey) {
+				if (facet.key != lastClickedFacetKey || facetValuesByKey[facet.key].length == 0) {
 					facet.indexCard(card);
 				}
 			})
