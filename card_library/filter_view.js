@@ -25,10 +25,16 @@ class FilterView extends React.Component {
 		this.setState({
 			initialCards: this.props.cards,
 			cards: this.props.cards,
+			facets: this.props.facets,
 			facetValuesByKey: facetValuesByKey,
 			facetByKey: facetByKey,
-			searchTerm: ''
+			searchTerm: '',
+			lastClickedFacetKey: null
 		});
+	}
+
+	componentDidMount() {
+		this.indexCards(this.state.cards, this.state.lastClickedFacetKey);
 	}
 
 	onSearch(value) {
@@ -36,7 +42,7 @@ class FilterView extends React.Component {
 			searchTerm: value.toLowerCase()
 		});
 
-		this.filterCards();
+		this.filterCards(this.state.lastClickedFacetKey);
 	}
 
 	onFacetValueClick(key, value) {
@@ -50,15 +56,17 @@ class FilterView extends React.Component {
 		}
 
 		this.setState({
-			facetValuesByKey: facetValuesByKey
+			facetValuesByKey: facetValuesByKey,
+			lastClickedFacetKey: key
 		});
 
-		this.filterCards();
+		this.filterCards(key);
 	}
 
-	filterCards() {
+	filterCards(lastClickedFacetKey) {
 		const cardsMatchingSearchTerm = this.state.initialCards.filter(card => this.performFilter(this.state.searchTerm, card));
-		this.updateCards(cardsMatchingSearchTerm.filter(this.matchesFacets.bind(this)));
+		const cardsMatchingFacets = cardsMatchingSearchTerm.filter(this.matchesFacets.bind(this));
+		this.updateCards(cardsMatchingFacets, lastClickedFacetKey);
 	}
 
 	performFilter(value, card) {
@@ -86,11 +94,34 @@ class FilterView extends React.Component {
 		});
 	}
 
-	updateCards(cards) {
+	updateCards(cards, lastClickedFacetKey) {
 		this.setState({
 			cards: cards
 		});
 		this.props.onFilter(cards);
+		this.indexCards(cards, lastClickedFacetKey);
+	}
+
+	indexCards(cards, lastClickedFacetKey) {
+		const facets = this.state.facets;
+
+		facets.forEach(facet => {
+			if (facet.key != lastClickedFacetKey) {
+				facet.clear();
+			}
+		});
+
+		cards.forEach(card => {
+			facets.forEach(facet => {
+				if (facet.key != lastClickedFacetKey) {
+					facet.indexCard(card);
+				}
+			})
+		});
+
+		this.setState({
+			facets: facets
+		});
 	}
 
 	render() {
@@ -104,7 +135,7 @@ class FilterView extends React.Component {
 			React.createElement(FacetsView, {
 				key: 'facetsView',
 				cards: this.state.cards,
-				facets: this.props.facets,
+				facets: this.state.facets,
 				onFacetValueClick: this.onFacetValueClick.bind(this)
 			})
 		]);

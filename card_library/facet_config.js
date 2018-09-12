@@ -13,11 +13,17 @@ class ValueFacet {
 		this.key = key;
 		this.label = label;
 		this.emptyKey = emptyKey;
-		this.index = {};
+		this.reset();
 	}
 
 	reset() {
 		this.index = {};
+	}
+
+	clear() {
+		Object.keys(this.index).forEach(key => {
+			this.index[key] = 0;
+		});
 	}
 
 	indexCard(card) {
@@ -75,12 +81,9 @@ class ArrayFacet extends ValueFacet {
 		if (value == this.emptyKey && !card[this.key]) {
 			return true;
 		} else {
-			const keys = card[this.key] || null;
-			if (keys && Array.isArray(keys)) {
-				return keys.indexOf(value) != -1;
-			} else {
-				return false;
-			}
+			const keysString = card[this.key] || this.emptyKey;
+			const keys = keysString.split(',').map(it => it.trim());
+			return keys.indexOf(value) != -1;
 		}
 	}
 

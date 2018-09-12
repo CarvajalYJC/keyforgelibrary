@@ -53,20 +53,8 @@ class FacetsView extends React.Component {
 	}
 
 	constructFacetViews() {
-		this.indexCards();
-
 		return this.props.facets.map(facet => {
 			return React.createElement(FacetView, {key: facet.key, facet: facet, onFacetValueClick: this.onFacetValueClick.bind(this)});
-		});
-	}
-
-	indexCards() {
-		this.props.facets.forEach(facet => facet.reset());
-
-		this.props.cards.forEach(card => {
-			this.props.facets.forEach(facet => {
-				facet.indexCard(card);
-			})
 		});
 	}
 

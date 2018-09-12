@@ -33,14 +33,4 @@ class SearchBox extends React.Component {
 		this.props.onFilter(filteredCards);
 	}
 
-	performFilter(value, card) {
-		return contains(value, card.name)
-			|| startsWith(value, card.id)
-			|| startsWith(value, card.house)
-			|| startsWith(value, card.type)
-			|| startsWith(value, card.rarity)
-			|| contains(value, card.traits)
-			|| contains(value, card.text);
-	}
-
 }
