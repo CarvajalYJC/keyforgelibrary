@@ -13,11 +13,6 @@ class SearchBox extends React.Component {
 				key: 'search-input',
 				placeholder: 'Search...',
 				onChange: this.onChange.bind(this)
-			}),
-			React.createElement('button', {
-				type: 'button',
-				className: 'fa fa-search search-button',
-				key: 'search-button'
 			})
 		]);
 	}
