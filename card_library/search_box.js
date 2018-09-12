@@ -1,13 +1,5 @@
 'use strict';
 
-const contains = function(testValue, cardValue) {
-	return cardValue && cardValue.toLowerCase().search(testValue) != -1;
-};
-
-const startsWith = function(testValue, cardValue) {
-	return cardValue && cardValue.toLowerCase().startsWith(testValue);
-};
-
 class SearchBox extends React.Component {
 
 	constructor(props) {
@@ -20,7 +12,7 @@ class SearchBox extends React.Component {
 				className: 'search-input', 
 				key: 'search-input',
 				placeholder: 'Search...',
-				onChange: this.filterList.bind(this)
+				onChange: this.onChange.bind(this)
 			}),
 			React.createElement('button', {
 				type: 'button',
@@ -28,6 +20,10 @@ class SearchBox extends React.Component {
 				key: 'search-button'
 			})
 		]);
+	}
+
+	onChange(event) {
+		this.props.onSearch(event.target.value);
 	}
 
 	filterList(event) {
