@@ -89,10 +89,46 @@ class ArrayFacet extends ValueFacet {
 
 }
 
+class PresenceFacet extends ValueFacet {
+
+	constructor(props) {
+		super(props);
+		this.presentKey = props.presentKey || 'Yes';
+		this.absentKey = props.absentKey || 'No';
+	}
+
+	indexCard(card) {
+		const key = card[this.key] ? this.presentKey : this.absentKey;
+		if (!this.index[key]) {
+			this.index[key] = 0;
+		}
+
+		this.index[key] = this.index[key] + 1;
+	}
+
+	matches(card, value) {
+		return (card[this.key] ? (value === this.presentKey) : (value === this.absentKey));
+	}
+
+	getIndexedValues() {
+		return [{
+			key: this.key,
+			value: this.presentKey,
+			count: this.index[this.presentKey] || 0
+		}, {
+			key: this.key,
+			value: this.absentKey,
+			count: this.index[this.absentKey] || 0
+		}];
+	}
+
+}
+
 const FACETS = [
 	new ValueFacet({key: 'house', label: 'House'}),
 	new ValueFacet({key: 'type', label: 'Card Type'}),
 	new ValueFacet({key: 'rarity', label: 'Rarity'}),
 	new ValueFacet({key: 'aember', label: 'Aember'}),
-	new ArrayFacet({key: 'traits', label: 'Trait'})
+	new ArrayFacet({key: 'traits', label: 'Trait'}),
+	new PresenceFacet({key: 'img', label: 'Image'})
 ];
